@@ -1,0 +1,25 @@
+This tool generates a quick report based on the mongod.log
+
+In order to use this tool, please:
+
+1 - Install the python3 requirements (pip3 install -r requirements.txt)
+2 - Have a mongodb instance running (single instance is ok, no password needed)
+3 - Import the mongod log using mongoimport 
+mongoimport -d <databasename> -c <collectionname> --host <hosname>
+This will load all the log data into a mongodb instance
+
+4 - Execute the report.py
+
+This script will generate a new folder with several file, open the index.html
+
+i.e: python3 report.py -d slowqueries -c logs -u "mongodb://127.0.0.1" -l 30 -f report08
+
+Where:
+ -d is the database you will connect 
+ -c is the collection the script will run the aggregates
+ -u is the mongodb uri
+ -l is the limit of rows for each session
+ -f is the folder name that will be created.
+
+
+Feel free to change the script, I only tested it on Linux. 
