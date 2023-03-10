@@ -5,7 +5,7 @@ In order to use this tool, please:
 1 - Install the python3 requirements (pip3 install -r requirements.txt)
 2 - Have a mongodb instance running (single instance is ok, no password needed)
 3 - Import the mongod log using mongoimport 
-mongoimport -d <databasename> -c <collectionname> --host <hosname>
+mongoimport -d <databasename> -c <collectionname> --host <hosname> mongod.log
 This will load all the log data into a mongodb instance
 
 4 - Execute the report.py
