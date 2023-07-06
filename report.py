@@ -38,7 +38,7 @@ os.makedirs(destination_folder)
 
 print("Connecting to MongoDB")
 
-try:    
+try:
     client = MongoClient(args.uri)
     db = client[args.database]
     collection = args.collection
@@ -77,7 +77,7 @@ for i in result:
         exists = -1
     if exists == -1:
         hashes.append(i["_id"]["hash"])
-    
+
     mytable.append(myobj)
 
 header = ["namespace (database.collection)", "Total", "queryHash"]
@@ -94,7 +94,10 @@ mytable = []
 
 for i in result:
     myobj = {}
-    myobj["ns"] = i["attr"]["ns"]
+    if 'attr' in i and 'ns' in i['attr']:
+      myobj["ns"] = i["attr"]["ns"]
+    else:
+      myobj["ns"] = ""
     myobj["durationMillis"] = str(i["attr"]["durationMillis"]) + "  (" + str(round(i["attr"]["durationMillis"]/1000,0)) + " seconds)"
     myobj["hash"] = str(i["_id"])
     if 'queryHash' in i["attr"]:
@@ -134,7 +137,7 @@ for i in result:
     myobj["ns"] = i["attr"]["ns"]
     myobj["durationMillis"] = i["attr"]["docsExamined"]
     myobj["hash"] = str(i["_id"])
-    
+
     if len(myobj["hash"]) == 24:
         myobj["hash"] = '<a href="' + str(i["_id"]) + '.html"' +'>' + str(i["_id"]) +'</a>'
         try:
@@ -186,7 +189,7 @@ html_gen.generate_main(collscan + slowqueries + docs_examined +
 
 for h in hashes:
     hash_details = db[collection].find_one({"attr.queryHash" : h})
-    
+
     if hash_details is None:
         hash_details = db[collection].find_one({"_id" : ObjectId(h)})
     html_gen.generate_detail(hash_details,h,destination_folder)
