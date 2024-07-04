@@ -1,0 +1,7 @@
+
+bin/*
+lib/*
+pyvenv.cfg
+*.log
+*.json
+.DS_Store
